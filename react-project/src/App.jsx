@@ -3,6 +3,8 @@ import  Homepage  from './pages/Homepage'
 import './App.css'
 import { Routes, Route } from 'react-router'
 import CheckoutPage from './pages/CheckoutPage';
+import OrdersPage from './pages/OrdersPage';
+import TrackingPage from './pages/TrackingPage';
 
 function App() {
  
@@ -11,6 +13,8 @@ function App() {
     <Routes>
       <Route index element={<Homepage/>}/>
       <Route path='checkout' element={<CheckoutPage />}/>
+      <Route path='orders' element={<OrdersPage />}/>
+      <Route path='tracking' element={<TrackingPage />}/>
     </Routes>
   );
 }
