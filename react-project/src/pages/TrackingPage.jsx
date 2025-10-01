@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './header.css'
+
 import './trackingPage.css'
 
 const TrackingPage = () => {

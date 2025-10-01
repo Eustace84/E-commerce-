@@ -1,12 +1,14 @@
 import React from 'react'
+import Header from '../components/Header';
 
-import './header.css'
 import './ordersPage.css'
 
 const OrdersPage = () => {
   return (
     <div>
-      <title>Orders</title>
+      <title>Orders</title> 
+
+    <Header/>
 
       <div className='header'>
         <div className='left-section'>
