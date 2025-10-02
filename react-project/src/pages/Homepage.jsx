@@ -6,9 +6,10 @@ import './HomePage.css';
 const Homepage = () => {
   return (
     <div>
+     <link rel="shortcut icon" href="home-favicon.png" type="image/x-icon" />
       <title>Home Page</title>
 
-      <Header/>
+      <Header />
 
       <div className='home-page'>
         <div className='products-grid'>
