@@ -10,7 +10,14 @@ import MobileLogoWhite from '../assets/images/icons/mobile-logo-white.png';
 
 
 import './header.css'
-const Header = () => {
+const Header = ({ cart }) => {
+  
+  let totalQuantity = 0
+  
+  cart.forEach(cartItem => {
+    totalQuantity += cartItem.quantity
+  });
+
   return (
     <div>
       <div className='header'>
@@ -36,7 +43,7 @@ const Header = () => {
 
           <NavLink className='cart-link header-link' to='/checkout'>
             <img className='cart-icon' src={CartIcon} />
-            <div className='cart-quantity'>3</div>
+            <div className='cart-quantity'>{ totalQuantity}</div>
             <div className='cart-text'>Cart</div>
           </NavLink> 
         </div>
