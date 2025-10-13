@@ -1,9 +1,60 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router';
-
+import { useParams } from 'react-router';
 import './trackingPage.css';
+import axios from 'axios';
+import dayjs from 'dayjs';
 
 const TrackingPage = () => {
+  const { orderId, productId } = useParams();
+  const [order, setOrder] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get(
+        `/api/orders/${orderId}?expand=products`
+      );
+      setOrder(response.data);
+    };
+    fetchData();
+  }, [orderId]);
+
+  if (!order) {
+    return null;
+  }
+
+  const orderProduct = order.products.find((orderProduct) => {
+    return orderProduct.productId === productId;
+  });
+
+  const totalDeliveryTimeMs =
+    orderProduct.estimatedDeliveryTimeMs - order.orderTimeMs;
+  const timePassedMs = dayjs().valueOf() - order.orderTimeMs;
+
+  let deliveryPercent = (timePassedMs / totalDeliveryTimeMs) * 100;
+  if (deliveryPercent > 100) {
+    deliveryPercent = 100;
+  }
+  let delivered;
+  let isPreparing;
+  let isShipped;
+  let isDelivered;
+  if (deliveryPercent >= 100) {
+    delivered = 'Delivered on'
+  }
+  if (deliveryPercent < 33 ) {
+   isPreparing = 'Preparing'
+   
+  }
+
+  if (deliveryPercent >= 33 && deliveryPercent < 100) {
+    isShipped = 'Shipped'
+  }
+
+  if (deliveryPercent === 100) {
+    isDelivered = 'Delivered'
+  }
+
   return (
     <div>
       <link
@@ -12,62 +63,71 @@ const TrackingPage = () => {
         type='image/x-icon'
       />
       <title>Tracking</title>
-      <div class='header'>
-        <div class='left-section'>
-          <Link to='/' class='header-link'>
-            <img class='logo' src='images/logo-white.png' />
-            <img class='mobile-logo' src='images/mobile-logo-white.png' />
+
+      <div className='header'>
+        <div className='left-section'>
+          <Link to='/' className='header-link'>
+            <img className='logo' src='images/logo-white.png' />
+            <img className='mobile-logo' src='images/mobile-logo-white.png' />
           </Link>
         </div>
 
-        <div class='middle-section'>
-          <input class='search-bar' type='text' placeholder='Search' />
+        <div className='middle-section'>
+          <input className='search-bar' type='text' placeholder='Search' />
 
-          <button class='search-button'>
-            <img class='search-icon' src='images/icons/search-icon.png' />
+          <button className='search-button'>
+            <img className='search-icon' src='images/icons/search-icon.png' />
           </button>
         </div>
 
-        <div class='right-section'>
-          <Link class='orders-link header-link' to='/orders'>
-            <span class='orders-text'>Orders</span>
+        <div className='right-section'>
+          <Link className='orders-link header-link' to='/orders'>
+            <span className='orders-text'>{}</span>
           </Link>
 
-          <Link class='cart-link header-link' to='/checkout'>
-            <img class='cart-icon' src='images/icons/cart-icon.png' />
-            <div class='cart-quantity'>3</div>
-            <div class='cart-text'>Cart</div>
+          <Link className='cart-link header-link' to='/checkout'>
+            <img className='cart-icon' src='images/icons/cart-icon.png' />
+            <div className='cart-quantity'>{orderProduct.quantity} </div>
+            <div className='cart-text'>Cart</div>
           </Link>
         </div>
       </div>
 
-      <div class='tracking-page'>
-        <div class='order-tracking'>
-          <Link class='back-to-orders-link link-primary' to='/orders'>
+      <div className='tracking-page'>
+        <div className='order-tracking'>
+          <Link className='back-to-orders-link link-primary' to='/orders'>
             View all orders
           </Link>
 
-          <div class='delivery-date'>Arriving on Monday, June 13</div>
-
-          <div class='product-info'>
-            Black and Gray Athletic Cotton Socks - 6 Pairs
+          <div className='delivery-date'>
+            {delivered}{' '}
+            {dayjs(orderProduct.estimatedDeliveryTimeMs).format('dddd, MMMM D')}
           </div>
 
-          <div class='product-info'>Quantity: 1</div>
+          <div className='product-info'>{orderProduct.product.name}</div>
 
-          <img
-            class='product-image'
-            src='images/products/athletic-cotton-socks-6-pairs.jpg'
-          />
+          <div className='product-info'>Quantity: {orderProduct.quantity}</div>
 
-          <div class='progress-labels-container'>
-            <div class='progress-label'>Preparing</div>
-            <div class='progress-label current-status'>Shipped</div>
-            <div class='progress-label'>Delivered</div>
+          <img className='product-image' src={orderProduct.product.image} />
+
+          <div className='progress-labels-container'>
+            <div className={`progress-label ${isPreparing && 'current-statue'}`}>
+              Preparing
+            </div>
+            <div className={`progress-label ${isShipped && 'current-statue'}`}>
+              Shipped
+            </div>
+            <div className={`progress-labe ${isDelivered && 'current-statue'}`}>
+              Delivered
+            </div>
           </div>
 
-          <div class='progress-bar-container'>
-            <div class='progress-bar'></div>
+          <div className='progress-bar-container'>
+            <div
+              className='progress-bar'
+              style={{
+                width: `${deliveryPercent}%`,
+              }}></div>
           </div>
         </div>
       </div>

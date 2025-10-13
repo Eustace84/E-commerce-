@@ -7,18 +7,18 @@ import { useEffect, useState } from 'react';
 import './HomePage.css';
 import axios from 'axios';
 import ProductsGrid from './ProductsGrid';
-const Homepage = ({ cart }) => {
+
+const Homepage = ({ cart, loadCart }) => {
   const [products, setProducts] = useState([]);
 
-  useEffect( () => {
-    const getHomeData = async() => { 
-         const response =  await axios.get('/api/products  ')
+  useEffect(() => {
+    const getHomeData = async () => {
+      const response = await axios.get('/api/products  ');
       response.data;
       setProducts(response.data);
-    }
- getHomeData()
-    }, []);
-
+    };
+    getHomeData();
+  }, []);
 
   return (
     <div>
@@ -28,7 +28,7 @@ const Homepage = ({ cart }) => {
       <Header cart={cart} />
 
       <div className='home-page'>
-        <ProductsGrid products={products } />
+        <ProductsGrid products={products} loadCart={loadCart} />
       </div>
     </div>
   );

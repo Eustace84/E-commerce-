@@ -17,7 +17,7 @@ const PaymentSummary = ({paymentSummary}) => {
           <div className='payment-summary-row'>
             <div>Shipping &amp; handling:</div>
             <div className='payment-summary-money'>
-              {formatMoney(paymentSummary.shippingCostCent)}
+              {formatMoney(paymentSummary.shippingCostCents)}
             </div>
           </div>
 
