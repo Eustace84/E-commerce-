@@ -1,14 +1,8 @@
 import dayjs from 'dayjs';
 import { Link } from 'react-router';
-import TrackingPage from '../TrackingPage';
-
-
 
 
 const OrderDetailsGrid = ({ order }) => {
-
-
-   
   return (
     <div>
       <div className='order-details-grid'>
@@ -28,12 +22,10 @@ const OrderDetailsGrid = ({ order }) => {
                   )}
                 </div>
 
-
                 <div className='product-quantity'>
                   Quantity: {orderProduct.quantity}
                 </div>
 
-                
                 <button className='buy-again-button button-primary'>
                   <img
                     className='buy-again-icon'
@@ -56,6 +48,6 @@ const OrderDetailsGrid = ({ order }) => {
       </div>
     </div>
   );
-}
+};
 
-export default OrderDetailsGrid
+export default OrderDetailsGrid;

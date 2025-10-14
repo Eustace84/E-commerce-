@@ -4,7 +4,6 @@ import { formatMoney } from '../../utils/money';
 
 const Product = ({ product, loadCart }) => {
   const [quantity, setQuantity] = useState(1);
-  
 
   const addToCart = async () => {
     await axios.post('/api/cart-items', {
@@ -14,9 +13,7 @@ const Product = ({ product, loadCart }) => {
     await loadCart();
   };
 
- 
-
-  function selectQuantity(event) {
+ function selectQuantity(event) {
     const quantitySelected = Number(event.target.value);
     setQuantity(quantitySelected);
   }
@@ -65,8 +62,7 @@ const Product = ({ product, loadCart }) => {
 
         <button
           className='add-to-cart-button button-primary '
-          onClick={addToCart}
-          >
+          onClick={addToCart}>
           Add to Cart
         </button>
       </div>
