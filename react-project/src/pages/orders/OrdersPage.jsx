@@ -26,7 +26,7 @@ const OrdersPage = ({ cart }) => {
       <div className='orders-page'>
         <div className='page-title'>Your Orders</div>
          
-        <OrderGrid orders={ orders} />
+        <OrderGrid orders={orders} cart={cart } />
       </div>
     </div>
   );

@@ -49,7 +49,7 @@ const CheckoutPage = ({ cart, loadCart }) => {
           <div className='payment-summary'>
             <div className='payment-summary-title'>Payment Summary</div>
 
-            <PaymentSummary paymentSummary={paymentSummary} />
+            <PaymentSummary paymentSummary={paymentSummary} loadCart={ loadCart} />
           </div>
         </div>
       </div>

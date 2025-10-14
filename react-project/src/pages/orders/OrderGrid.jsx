@@ -1,7 +1,7 @@
 import OrderHeader from './OrderHeader';
 import OrderDetailsGrid from './OrderDetailsGrid';
 
-const OrderGrid = ({ orders }) => {
+const OrderGrid = ({ orders, cart }) => {
   return (
     <div>
       <div className='orders-grid'>
@@ -10,7 +10,7 @@ const OrderGrid = ({ orders }) => {
             <div key={orders.id} className='order-container'>
               <OrderHeader order={order} />
 
-              <OrderDetailsGrid order={order} />
+              <OrderDetailsGrid order={order} cart={ cart} />
             </div>
           );
         })}
