@@ -1,11 +1,7 @@
-import axios from 'axios';
 import dayjs from 'dayjs';
 import { Link } from 'react-router';
 
-
-
-const OrderDetailsGrid = ({ order, cart }) => {
-  
+const OrderDetailsGrid = ({ order }) => {
   return (
     <div>
       <div className='order-details-grid'>
@@ -29,11 +25,9 @@ const OrderDetailsGrid = ({ order, cart }) => {
                   Quantity: {orderProduct.quantity}
                 </div>
 
-                <button className='buy-again-button button-primary'
-                  
-                onClick={''}
-                >
-
+                <button
+                  className='buy-again-button button-primary'
+                  onClick={''}>
                   <img
                     className='buy-again-icon'
                     src='images/icons/buy-again.png'

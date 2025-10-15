@@ -20,7 +20,7 @@ const CheckoutPage = ({ cart, loadCart }) => {
       setDeliveryOptions(response.data);
     };
     fetchCheckoutData();
-  }, [cart]);
+  }, []);
 
   useEffect(() => {
     const fetchPaymentSummary = async () => {
@@ -29,6 +29,8 @@ const CheckoutPage = ({ cart, loadCart }) => {
     };
     fetchPaymentSummary();
   }, [cart]);
+
+     window.axios = axios
 
   return (
     <div>

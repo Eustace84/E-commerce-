@@ -1,24 +1,44 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { formatMoney } from '../utils/money';
 import axios from 'axios';
 
-
-
 const CartItemDetails = ({ cartItem, loadCart }) => {
-  const deleteCartItem = async () => {
-    await axios.delete(`/api/cart-items/${cartItem.productId}`)
-    
-    await loadCart()
-  }
-  
-  const updateCartItem = async () => {
-    await axios.put(`/api/cart-items/${cartItem.productId}`, {
-      productId: cartItem.productId,
-      quantity: 1
-    })
+  const [update, setUpdate] = useState(false);
+  const [quantity, setQuantity] = useState(cartItem.quantity);
 
-    await loadCart()
+  const deleteCartItem = async () => {
+    await axios.delete(`/api/cart-items/${cartItem.productId}`);
+
+    await loadCart();
+  };
+
+  const updateQuantity = async () => {
+    if (update) {
+      await axios.put(`/api/cart-items/${cartItem.productId}`, {
+        quantity: Number(quantity),
+      });
+      await loadCart();
+      setUpdate(false);
+    } else {
+      setUpdate(true);
+    }
+  };
+
+  function handleChange(event) {
+    setQuantity(event.target.value);
   }
+
+  function onKeyDown(event) {
+    if (event.key === 'Enter') {
+      updateQuantity();
+    }
+
+    if (event.key === 'Escape') {
+      setQuantity(cartItem.quantity);
+      setUpdate(false);
+    }
+  }
+
   return (
     <div>
       <img className='product-image' src={cartItem.product.image} />
@@ -32,12 +52,23 @@ const CartItemDetails = ({ cartItem, loadCart }) => {
         <div className='product-quantity'>
           <span>
             Quantity:{' '}
-            <span className='quantity-label'>{cartItem.quantity}</span>
+            {update ? (
+              <input
+                type='text'
+                className='quantity-input'
+                style={{ opacity: update ? 1 : 0 }}
+                value={quantity}
+                onChange={handleChange}
+                onKeyDown={onKeyDown}
+              />
+            ) : (
+              <span className='quantity-label'> {cartItem.quantity}</span>
+            )}
           </span>
 
           <span
             className='update-quantity-link link-primary'
-            onClick={updateCartItem}>
+            onClick={updateQuantity}>
             Update
           </span>
 
@@ -46,11 +77,10 @@ const CartItemDetails = ({ cartItem, loadCart }) => {
             onClick={deleteCartItem}>
             Delete
           </span>
-
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default CartItemDetails
+export default CartItemDetails;
