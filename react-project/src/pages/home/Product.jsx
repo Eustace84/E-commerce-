@@ -79,6 +79,7 @@ import { formatMoney } from '../../utils/money';
 
         <button
           className='add-to-cart-button button-primary '
+          data-testid='addToCartButton'
           onClick={addToCart}>
           Add to Cart
         </button>
