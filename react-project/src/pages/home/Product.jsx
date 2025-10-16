@@ -30,7 +30,9 @@ import { formatMoney } from '../../utils/money';
     
   return (
     <div>
-      <div key={product.id} className='product-container'>
+      <div key={product.id} className='product-container'
+      data-testid='product-container'
+      >
         <div className='product-image-container'>
           <img
             className='product-image'
